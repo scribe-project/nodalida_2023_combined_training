@@ -20,18 +20,14 @@ import numpy as np
 
 import sys
 # Usage:
-# python3 npsc_trainer_kblab_bm.py [data_dir]
+# python3 stortinget.py [data_dir]
 #
-# Per Erik runs:
-# python3 npsc_trainer_kblab_bm.py /media/pers/elements/
-# Giampiero runs:
-# python3 npsc_trainer_kblab_bm.py /NOBACKUP/giampi/nodalida2023/
 if len(sys.argv)>1:
     data_dir = Path(sys.argv[1])
 else:
     data_dir = Path('.')
 
-print("Train wav2vec model on NPSC Bokmål using the KBLab pretrained model")
+print("Train wav2vec model on STORTINGET (NPSC Bokmål) using the KBLab pretrained model")
 
 print("Connect to wanb")
 

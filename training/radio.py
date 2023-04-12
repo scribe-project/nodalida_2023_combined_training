@@ -20,16 +20,12 @@ import numpy as np
 
 import sys
 # Usage:
-# python3 rundkast_trainer_kblab_bm.py [data_dir]
+# python3 radio.py [data_dir]
 #
-# Per Erik runs:
-# python3 rundkast_trainer_kblab_bm.py /media/pers/elements/
-# Giampiero runs:
-# python3 rundkast_trainer_kblab_bm.py /NOBACKUP/giampi/nodalida2023/
-if len(sys.argv)>1:
+if len(sys.argv) > 1:
     data_dir = Path(sys.argv[1])
 else:
-    data_dir = Path('.')
+    data_dir = Path(".")
 
 
 print("Train wav2vec model on Rundkast using the KBLab pretrained model")
@@ -179,15 +175,6 @@ def prepare_dataset(batch):
     return batch
 
 
-# remove columns from datasets. Do this only first time, next time read from pickle
-#picklepath = (data_dir / "processed_datasets/")
-#picklepath.mkdir(parents=True, exist_ok=True)
-#if((picklepath / "rundkast_train.pickle").exists() and (picklepath / "rundkast_valid.pickle").exists()):
-#    with open(picklepath / "rundkast_train.pickle", "rb") as picklefile:
-#        dataset_train = pickle.load(picklefile)
-#    with open(picklepath / "rundkast_valid.pickle", "rb") as picklefile:
-#        dataset_valid = pickle.load(picklefile)
-#else:
 print('preparing training data')
 dataset_train = dataset_train.map(
     prepare_dataset, remove_columns=dataset_train.column_names
@@ -196,10 +183,6 @@ print('preparing validation data')
 dataset_valid = dataset_valid.map(
     prepare_dataset, remove_columns=dataset_valid.column_names
 )
-#    with open(picklepath / "rundkast_train.pickle", "wb") as picklefile:
-#        pickle.dump(dataset_train, picklefile)
-#    with open(picklepath / "rundkast_valid.pickle", "wb") as picklefile:
-#        pickle.dump(dataset_valid, picklefile)
 
 repo_name = "wav2vec2-large-voxrex-300m-rundkast_nb_2"
 
@@ -298,7 +281,7 @@ model = Wav2Vec2ForCTC.from_pretrained(
 model.freeze_feature_encoder()
 
 training_args = TrainingArguments(
-    output_dir = (data_dir / "wav2vec_models" / repo_name),
+    output_dir=(data_dir / "wav2vec_models" / repo_name),
     group_by_length=True,
     per_device_train_batch_size=16,
     per_device_eval_batch_size=16,
@@ -338,7 +321,7 @@ trainer = Trainer(
 )
 
 print("start training")
-trainer.train()
+trainer.train(resume_from_checkpoint = True)
 
 print("Evaluate:")
 trainer.evaluate()
