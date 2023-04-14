@@ -126,7 +126,7 @@ from transformers import Wav2Vec2CTCTokenizer
 tokenizer = Wav2Vec2CTCTokenizer.from_pretrained(
     "./", unk_token="[UNK]", pad_token="[PAD]", word_delimiter_token=" "
 )
-repo_name = "wav2vec2-large-voxrex-300m-npsc_rundkast_nb_full"
+repo_name = "wav2vec2-large-voxrex-300m-combined-long"
 repo_id = "scribe-project/" + repo_name
 
 # In order for this to work you have to run huggingface-cli login in a terminal or huggingface_hub.login()

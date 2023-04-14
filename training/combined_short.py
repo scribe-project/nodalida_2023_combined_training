@@ -135,11 +135,10 @@ tokenizer = Wav2Vec2CTCTokenizer.from_pretrained(
 
 # In order for this to work you have to run huggingface-cli login in a terminal or huggingface_hub.login()
 # Apparently, you need to create a directory for temporary files even if you use use_temp_dir=False, check why
-Path("wav2vec2-large-voxrex-300m-npsc_rundkast_nb").mkdir(parents=True, exist_ok=True)
+Path("wav2vec2-large-voxrex-300m-combined-short").mkdir(parents=True, exist_ok=True)
 print("Push to hub")
 tokenizer.push_to_hub(
-    #"wav2vec2-large-voxrex-300m-npsc_rundkast_nb",
-    repo_id="scribe-project/wav2vec2-large-voxrex-300m-npsc_rundkast_nb",
+    repo_id="scribe-project/wav2vec2-large-voxrex-300m-combined-short",
     use_temp_dir=False,
 )
 
