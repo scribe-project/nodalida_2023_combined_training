@@ -6,7 +6,7 @@ from transformers import (
     Wav2Vec2ForCTC,
     TrainingArguments,
     Trainer,
-    EarlyStoppingCallback,
+    EarlyStoppingCallback
 )
 import torch
 import pickle
@@ -21,19 +21,15 @@ import numpy as np
 import sys
 
 # Usage:
-# python3 npscrundkast_trainer_kblab_bm_full.py [data_dir]
+# python3 combined_long.py [data_dir]
 #
-# Per Erik runs:
-# python3 npscrundkast_trainer_kblab_bm_full.py /media/pers/elements/
-# Giampiero runs:
-# python3 npscrundkast_trainer_kblab_bm_full.py /NOBACKUP/giampi/nodalida2023/
 if len(sys.argv) > 1:
     data_dir = Path(sys.argv[1])
 else:
     data_dir = Path(".")
 
 
-print("Train wav2vec model on Rundkast using the KBLab pretrained model")
+print("Train wav2vec model on the COMBINED LONG training data using the KBLab pretrained model")
 
 print("Connect to wanb")
 
@@ -130,7 +126,7 @@ from transformers import Wav2Vec2CTCTokenizer
 tokenizer = Wav2Vec2CTCTokenizer.from_pretrained(
     "./", unk_token="[UNK]", pad_token="[PAD]", word_delimiter_token=" "
 )
-repo_name = "wav2vec2-large-voxrex-300m-npsc_rundkast_nb_full"
+repo_name = "wav2vec2-large-voxrex-300m-combined-long"
 repo_id = "scribe-project/" + repo_name
 
 # In order for this to work you have to run huggingface-cli login in a terminal or huggingface_hub.login()
@@ -312,7 +308,7 @@ trainer = Trainer(
 )
 
 print("start training")
-trainer.train()
+trainer.train(resume_from_checkpoint = True)
 
 print("Evaluate:")
 trainer.evaluate()

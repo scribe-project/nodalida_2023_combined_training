@@ -20,18 +20,14 @@ import numpy as np
 
 import sys
 # Usage:
-# python3 npsc_trainer_kblab_bm.py [data_dir]
+# python3 stortinget.py [data_dir]
 #
-# Per Erik runs:
-# python3 npsc_trainer_kblab_bm.py /media/pers/elements/
-# Giampiero runs:
-# python3 npsc_trainer_kblab_bm.py /NOBACKUP/giampi/nodalida2023/
 if len(sys.argv)>1:
     data_dir = Path(sys.argv[1])
 else:
     data_dir = Path('.')
 
-print("Train wav2vec model on NPSC Bokmål using the KBLab pretrained model")
+print("Train wav2vec model on STORTINGET (NPSC Bokmål) using the KBLab pretrained model")
 
 print("Connect to wanb")
 
@@ -132,11 +128,10 @@ tokenizer = Wav2Vec2CTCTokenizer.from_pretrained(
 # huggingface_hub.login()
 # In order for this to work you have to run huggingface-cli login in a terminal or huggingface_hub.login()
 # Apparently, you need to create a directory for temporary files even if you use use_temp_dir=False, check why
-Path("wav2vec2-large-voxrex-300m-npsc_nb").mkdir(parents=True, exist_ok=True)
+Path("wav2vec2-large-voxrex-300m-stortinget").mkdir(parents=True, exist_ok=True)
 print("Push to hub")
 tokenizer.push_to_hub(
-    #"wav2vec2-large-voxrex-300m-npsc_nb",
-    repo_id="scribe-project/wav2vec2-large-voxrex-300m-npsc_nb",
+    repo_id="scribe-project/wav2vec2-large-voxrex-300m-stortinget",
     use_temp_dir=False,
 )
 
